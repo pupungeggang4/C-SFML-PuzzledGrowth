@@ -9,13 +9,13 @@ int initGame(Game* game) {
 		return 0;
     sfFloatRect viewRect = {{0.f, 0.f}, {800.f, 600.f}};
     sfFloatRect viewRectUI = {{0.f, 0.f}, {800.f, 600.f}};
+    game->view = sfView_createFromRect(viewRect);
+    game->viewUI = sfView_createFromRect(viewRectUI);
     if (!game->view || !game->viewUI) {
         printf("1\n");
         sfRenderWindow_destroy(game->window);
         return 0;
     }
-    game->view = sfView_createFromRect(viewRect);
-    game->viewUI = sfView_createFromRect(viewRectUI);
     sfRenderWindow_setView(game->window, game->viewUI);
 
     return 1;
