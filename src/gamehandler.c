@@ -1,0 +1,52 @@
+#include "includes.h"
+#include "game.h"
+#include "gamehandler.h"
+
+int initGame(Game* game) {
+	const sfVideoMode mode = {{800, 600}, 32};
+	game->window = sfRenderWindow_create(mode, "SFML window", sfResize | sfClose, sfWindowed, NULL);
+    if (!game->window)
+		return 0;
+    sfFloatRect viewRect = {{0.f, 0.f}, {800.f, 600.f}};
+    sfFloatRect viewRectUI = {{0.f, 0.f}, {800.f, 600.f}};
+    if (!game->view || !game->viewUI) {
+        printf("1\n");
+        sfRenderWindow_destroy(game->window);
+        return 0;
+    }
+    game->view = sfView_createFromRect(viewRect);
+    game->viewUI = sfView_createFromRect(viewRectUI);
+    sfRenderWindow_setView(game->window, game->viewUI);
+
+    return 1;
+}
+
+void runGame(Game* game) {
+    while (sfRenderWindow_isOpen(game->window)) {
+        handleInputGame(game);
+        updateGame(game);
+        renderGame(game);
+    }
+}
+
+void updateGame(Game* game) {
+}
+
+void renderGame(Game* game) {
+    sfRenderWindow_clear(game->window, sfWhite);
+    sfRenderWindow_display(game->window);
+}
+
+void handleInputGame(Game* game) {
+    sfEvent event;
+    while (sfRenderWindow_pollEvent(game->window, &event)) {
+        if (event.type == sfEvtClosed)
+            sfRenderWindow_close(game->window);
+    }
+}
+
+void quitGame(Game* game) {
+    sfView_destroy(game->view);
+    sfView_destroy(game->viewUI);
+	sfRenderWindow_destroy(game->window);
+}
