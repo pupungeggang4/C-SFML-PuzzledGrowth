@@ -3,16 +3,29 @@
 #include "gamehandler.h"
 
 int initGame(Game* game) {
-	const sfVideoMode mode = {{800, 600}, 32};
-	game->window = sfRenderWindow_create(mode, "SFML window", sfResize | sfClose, sfWindowed, NULL);
+    sfVideoMode desktopMode = sfVideoMode_getDesktopMode();
+    if (desktopMode.size.x > 2500) {
+        game->width = 1600;
+        game->height = 1200;
+    } else if (desktopMode.size.x > 2000) {
+        game->width = 1200;
+        game->height = 900;
+    } else {
+        game->width = 800;
+        game->height = 600;
+    }
+
+	const sfVideoMode mode = {{game->width, game->height}, 32};
+	game->window = sfRenderWindow_create(mode, "Puzzled Growth", sfResize | sfClose, sfWindowed, NULL);
+
     if (!game->window)
 		return 0;
+
     sfFloatRect viewRect = {{0.f, 0.f}, {800.f, 600.f}};
     sfFloatRect viewRectUI = {{0.f, 0.f}, {800.f, 600.f}};
     game->view = sfView_createFromRect(viewRect);
     game->viewUI = sfView_createFromRect(viewRectUI);
     if (!game->view || !game->viewUI) {
-        printf("1\n");
         sfRenderWindow_destroy(game->window);
         return 0;
     }

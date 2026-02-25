@@ -4,6 +4,7 @@
 typedef struct Game {
 	sfRenderWindow* window;
 	sfView* view;
-	sfView* viewUI;
+    sfView* viewUI;
+    int width, height;
 	float frameCurrent, framePrevious, delta;
 } Game;
