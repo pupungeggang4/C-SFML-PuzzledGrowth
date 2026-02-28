@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include <time.h>
+#include <string.h>
 
 #include <CSFML/Audio.h>
 #include <CSFML/Graphics.h>

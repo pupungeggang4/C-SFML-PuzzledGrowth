@@ -1,5 +1,7 @@
 #include "includes.h"
+#include "entity.h"
 #include "game.h"
+#include "fieldhandler.h"
 #include "gamehandler.h"
 
 int initGame(Game* game) {
@@ -31,10 +33,22 @@ int initGame(Game* game) {
     }
     sfRenderWindow_setView(game->window, game->viewUI);
 
+    game->texture = sfTexture_createFromFile("asset/sprite.png", NULL);
+
     return 1;
 }
 
 void runGame(Game* game) {
+    int data[16] = {
+        WALL, WALL, WALL, WALL,
+        WALL, EMPTY, PLAYER, WALL,
+        WALL, EMPTY, EMPTY, WALL,
+        WALL, WALL, WALL, WALL
+    };
+
+    loadField(&game->field, data, 4, 4);
+    printf("%d\n", game->field.cell[0][0].type);
+
     while (sfRenderWindow_isOpen(game->window)) {
         handleInputGame(game);
         updateGame(game);
