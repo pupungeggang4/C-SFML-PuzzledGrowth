@@ -62,7 +62,7 @@ void updateGame(Game* game) {
 
 void renderGame(Game* game) {
     sfRenderWindow_clear(game->window, sfWhite);
-    renderField(&game, &game->field);
+    renderField(game, &game->field);
     sfRenderWindow_display(game->window);
 }
 
