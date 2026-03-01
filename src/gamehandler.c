@@ -1,4 +1,5 @@
 #include "includes.h"
+#include "asset.h"
 #include "entity.h"
 #include "game.h"
 #include "fieldhandler.h"
@@ -18,7 +19,8 @@ int initGame(Game* game) {
     }
 
 	const sfVideoMode mode = {{game->width, game->height}, 32};
-	game->window = sfRenderWindow_create(mode, "Puzzled Growth", sfResize | sfClose, sfWindowed, NULL);
+    const wchar_t title[] = L"Puzzled Growth";
+	game->window = sfRenderWindow_createUnicode(mode, title, sfResize | sfClose, sfWindowed, NULL);
 
     if (!game->window)
 		return 0;
@@ -33,7 +35,7 @@ int initGame(Game* game) {
     }
     sfRenderWindow_setView(game->window, game->viewUI);
 
-    game->texture = sfTexture_createFromFile("asset/sprite.png", NULL);
+    texture = sfTexture_createFromFile("asset/sprite_entity.png", NULL);
 
     return 1;
 }
@@ -42,12 +44,11 @@ void runGame(Game* game) {
     int data[16] = {
         WALL, WALL, WALL, WALL,
         WALL, EMPTY, PLAYER, WALL,
-        WALL, EMPTY, EMPTY, WALL,
+        WALL, GOAL, EMPTY, WALL,
         WALL, WALL, WALL, WALL
     };
 
     loadField(&game->field, data, 4, 4);
-    printf("%d\n", game->field.cell[0][0].type);
 
     while (sfRenderWindow_isOpen(game->window)) {
         handleInputGame(game);
@@ -61,6 +62,7 @@ void updateGame(Game* game) {
 
 void renderGame(Game* game) {
     sfRenderWindow_clear(game->window, sfWhite);
+    renderField(&game, &game->field);
     sfRenderWindow_display(game->window);
 }
 

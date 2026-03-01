@@ -2,7 +2,7 @@
 #include "includes.h"
 
 enum TypeTag {
-    EMPTY, PLAYER, WATER, FLOWER, VINE, WALL
+    EMPTY, PLAYER, WATER, FLOWER, VINE, WALL, GOAL
 };
 
 typedef struct Entity {
@@ -11,4 +11,5 @@ typedef struct Entity {
     int row, col;
     int solid, pushable;
     sfVector2f pos;
+    sfSprite* sprite;
 } Entity;

@@ -3,7 +3,6 @@
 #include "field.h"
 
 typedef struct Game {
-    sfTexture* texture;
 	sfRenderWindow* window;
 	sfView* view;
     sfView* viewUI;

@@ -4,4 +4,4 @@
 #include "game.h"
 
 void loadField(Field*, int*, int, int);
-
+void renderField(Game*, Field*);
