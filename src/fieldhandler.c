@@ -20,6 +20,7 @@ void loadField(Field* field, int* data, int row, int col) {
             entity->col = j;
             entity->pos.x = j * 40.f;
             entity->pos.y = i * 40.f;
+            entity->sprite = NULL;
             entity->sprite = sfSprite_create(texture);
             const sfIntRect rect = {{0, 0}, {40, 40}};
             sfSprite_setTextureRect(entity->sprite, rect);
